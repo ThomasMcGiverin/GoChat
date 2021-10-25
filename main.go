@@ -34,7 +34,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("woooo")
+
 	defer ws.Close()
 	clients[ws] = true
 

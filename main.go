@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/gorilla/websocket"
 	"github.com/joho/godotenv"
@@ -125,7 +124,7 @@ func main() {
 	http.HandleFunc("/websocket", handleConnections)
 	go handleMessages()
 
-	log.Print("Server started at localhost:4444")
+	log.Print("Server started at localhost:" + port)
 
 	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatal(err)

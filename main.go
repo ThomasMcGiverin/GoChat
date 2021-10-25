@@ -15,9 +15,9 @@ import (
 var (
 	rdb *redis.Client
 
-	clients = make(map[*websocket.Conn]bool)
+	clients     = make(map[*websocket.Conn]bool)
 	broadcaster = make(chan ChatMessage)
-	upgrader = websocket.Upgrader{
+	upgrader    = websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool {
 			return true
 		},
@@ -26,7 +26,7 @@ var (
 
 type ChatMessage struct {
 	Username string `json:"username"`
-	Text string `json:"text"`
+	Text     string `json:"text"`
 }
 
 func handleConnections(w http.ResponseWriter, r *http.Request) {
@@ -72,7 +72,7 @@ func unsafeError(err error) bool {
 
 func handleMessages() {
 	for {
-		msg := <- broadcaster
+		msg := <-broadcaster
 
 		storeInRedis(msg)
 		messageClients(msg)
@@ -127,7 +127,7 @@ func main() {
 
 	log.Print("Server started at localhost:4444")
 
-	if err := http.ListenAndServe(":" + port, nil); err != nil {
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatal(err)
 	}
 }
